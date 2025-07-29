@@ -1,0 +1,20 @@
+# Use version 3.8 of the Docker Compose file format
+version: '3.8'
+
+services:
+  # Define the service for our bot
+  sync-bot:
+    # Tell Docker Compose to build the image from the Dockerfile in the current directory
+    build: .
+    # Give the container a friendly name for easier management
+    container_name: discord-sync-bot
+    # Ensure the bot restarts automatically if it crashes or the server reboots
+    restart: unless-stopped
+    # This is the secure way to pass your secrets from the .env file into the container
+    env_file:
+      - .env
+    # This is critical: It mounts the SQLite database file from your host machine
+    # into the container. This ensures your database data PERSISTS even if the
+    # container is removed or updated.
+    volumes:
+      - ./roles.sqlite:/usr/src/app/roles.sqlite

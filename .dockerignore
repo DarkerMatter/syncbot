@@ -1,0 +1,15 @@
+# Exclude local dependencies, as they are installed inside the container
+node_modules
+
+# Exclude environment files - these will be injected at runtime
+.env
+
+# Exclude Docker and Git files
+Dockerfile
+.dockerignore
+.git
+.gitignore
+
+# Exclude IDE and log files
+.idea
+*.log
