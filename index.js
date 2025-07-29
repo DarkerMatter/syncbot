@@ -145,6 +145,24 @@ client.on('ready', async () => {
     }
 });
 
+client.on('guildMemberAdd', async (member) => {
+    // When a new user joins any server, automatically sync their roles from the primary server.
+    console.log(`[EVENT] User ${member.user.tag} (${member.id}) joined guild "${member.guild.name}".`);
+    console.log(`[EVENT] Triggering auto-sync for ${member.user.tag} from the primary server.`);
+
+    // We can reuse the same robust logic from the /sync command.
+    // This will fetch their roles from the primary server, update the DB,
+    // and then apply those roles to the server they just joined (and all others).
+    const result = await executeSyncForUser(member.id);
+
+    if (!result.success) {
+        // Log if the auto-sync failed for some reason (e.g., user not in primary guild).
+        console.warn(`[EVENT] Auto-sync for ${member.user.tag} failed: ${result.message}`);
+    } else {
+        console.log(`[EVENT] Auto-sync for ${member.user.tag} completed successfully.`);
+    }
+});
+
 client.on('guildMemberUpdate', async (oldMember, newMember) => {
     if (isSyncing.has(newMember.id)) return;
 
