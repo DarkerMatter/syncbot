@@ -17,4 +17,4 @@ services:
     # into the container. This ensures your database data PERSISTS even if the
     # container is removed or updated.
     volumes:
-      - ./roles.sqlite:/usr/src/app/roles.sqlite
+      - ./data:/usr/src/app/data

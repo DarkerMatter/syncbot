@@ -9,7 +9,7 @@ const Database = require('better-sqlite3');
 // 2. DATABASE INITIALIZATION
 // =================================================================================================
 // This database will be our "source of truth" to prevent sync loops.
-const db = new Database('roles.sqlite');
+const db = new Database('data/roles.sqlite');
 
 // Create the table to store a user's roles. The combination of userId and roleName must be unique.
 db.prepare(`
